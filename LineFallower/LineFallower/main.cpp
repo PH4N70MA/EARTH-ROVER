@@ -5,18 +5,24 @@
  * Author : alexg
  */ 
 
-#include <avr/io.h>
+#include "main.h"
 
 
 int main(void)
 {
-    /* Replace with your application code */
-    DDRE |= (1 << DDE4) | (1 << DDE5) | (1 << DDE3);
-    DDRG |= (1 << DDG5);
-    PORTE &= ~(1 << PORTE4) | ~(1 << PORTE5) | ~(1 << PORTE3);
-    PORTG &= ~(1 << PORTG5);
+    motorsPinsInit();
     while (1) 
     {
+       
     }
 }
 
+void motorsPinsInit(void)
+{
+    //setam pini pentru motor ca iesire cu Valorile initiale 0
+    //Initializam pini pentru motor
+    DDRE |= (1 << DDE4) | (1 << DDE5) | (1 << DDE3);
+    DDRG |= (1 << DDG5);
+    //setam in 0 pini pentru motor
+    STOP_MOTORS();
+}
