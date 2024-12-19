@@ -3,29 +3,29 @@ LineFallower.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800200  00800200  000001a2  2**0
+  0 .data         00000000  00800200  00800200  0000026a  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000014e  00000000  00000000  00000054  2**1
+  1 .text         00000216  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  000001a2  2**0
+  2 .comment      00000030  00000000  00000000  0000026a  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001d4  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000029c  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000058  00000000  00000000  00000214  2**0
+  4 .debug_aranges 00000068  00000000  00000000  000002dc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000df3  00000000  00000000  0000026c  2**0
+  5 .debug_info   00000f37  00000000  00000000  00000344  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000c85  00000000  00000000  0000105f  2**0
+  6 .debug_abbrev 00000d57  00000000  00000000  0000127b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000430  00000000  00000000  00001ce4  2**0
+  7 .debug_line   00000548  00000000  00000000  00001fd2  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000000a0  00000000  00000000  00002114  2**2
+  8 .debug_frame  000000c0  00000000  00000000  0000251c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000006d9  00000000  00000000  000021b4  2**0
+  9 .debug_str    0000076e  00000000  00000000  000025dc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000001ca  00000000  00000000  0000288d  2**0
+ 10 .debug_loc    00000212  00000000  00000000  00002d4a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000050  00000000  00000000  00002a57  2**0
+ 11 .debug_ranges 00000060  00000000  00000000  00002f5c  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -155,8 +155,8 @@ Disassembly of section .text:
   ee:	cd bf       	out	0x3d, r28	; 61
   f0:	00 e0       	ldi	r16, 0x00	; 0
   f2:	0c bf       	out	0x3c, r16	; 60
-  f4:	27 d0       	rcall	.+78     	; 0x144 <main>
-  f6:	29 c0       	rjmp	.+82     	; 0x14a <_exit>
+  f4:	7a d0       	rcall	.+244    	; 0x1ea <main>
+  f6:	8d c0       	rjmp	.+282    	; 0x212 <_exit>
 
 000000f8 <__bad_interrupt>:
   f8:	83 cf       	rjmp	.-250    	; 0x0 <__vectors>
@@ -184,59 +184,222 @@ void ADC_init(void)
  110:	82 b9       	out	0x02, r24	; 2
  112:	08 95       	ret
 
-00000114 <_Z10motorsInitv>:
+00000114 <ADC_read>:
+}
+
+uint16_t ADC_read(SensorPin channel)
+{
+	switch(channel)
+ 114:	82 30       	cpi	r24, 0x02	; 2
+ 116:	d1 f0       	breq	.+52     	; 0x14c <ADC_read+0x38>
+ 118:	28 f4       	brcc	.+10     	; 0x124 <ADC_read+0x10>
+ 11a:	88 23       	and	r24, r24
+ 11c:	41 f0       	breq	.+16     	; 0x12e <ADC_read+0x1a>
+ 11e:	81 30       	cpi	r24, 0x01	; 1
+ 120:	61 f0       	breq	.+24     	; 0x13a <ADC_read+0x26>
+ 122:	2e c0       	rjmp	.+92     	; 0x180 <ADC_read+0x6c>
+ 124:	83 30       	cpi	r24, 0x03	; 3
+ 126:	d9 f0       	breq	.+54     	; 0x15e <ADC_read+0x4a>
+ 128:	84 30       	cpi	r24, 0x04	; 4
+ 12a:	11 f1       	breq	.+68     	; 0x170 <ADC_read+0x5c>
+ 12c:	29 c0       	rjmp	.+82     	; 0x180 <ADC_read+0x6c>
+	{
+		case sensorOne:
+		ADMUX &=~ 0x1F;
+ 12e:	ec e7       	ldi	r30, 0x7C	; 124
+ 130:	f0 e0       	ldi	r31, 0x00	; 0
+ 132:	80 81       	ld	r24, Z
+ 134:	80 7e       	andi	r24, 0xE0	; 224
+ 136:	80 83       	st	Z, r24
+		break;
+ 138:	23 c0       	rjmp	.+70     	; 0x180 <ADC_read+0x6c>
+		case sensorTwo:
+		ADMUX &=~ 0x1F;
+ 13a:	ec e7       	ldi	r30, 0x7C	; 124
+ 13c:	f0 e0       	ldi	r31, 0x00	; 0
+ 13e:	80 81       	ld	r24, Z
+ 140:	80 7e       	andi	r24, 0xE0	; 224
+ 142:	80 83       	st	Z, r24
+		ADMUX |= (1<<MUX0);
+ 144:	80 81       	ld	r24, Z
+ 146:	81 60       	ori	r24, 0x01	; 1
+ 148:	80 83       	st	Z, r24
+		break;
+ 14a:	1a c0       	rjmp	.+52     	; 0x180 <ADC_read+0x6c>
+		case sensorThree:
+		ADMUX &=~ 0x1F;
+ 14c:	ec e7       	ldi	r30, 0x7C	; 124
+ 14e:	f0 e0       	ldi	r31, 0x00	; 0
+ 150:	80 81       	ld	r24, Z
+ 152:	80 7e       	andi	r24, 0xE0	; 224
+ 154:	80 83       	st	Z, r24
+		ADMUX |= (1<<MUX1);
+ 156:	80 81       	ld	r24, Z
+ 158:	82 60       	ori	r24, 0x02	; 2
+ 15a:	80 83       	st	Z, r24
+		break;
+ 15c:	11 c0       	rjmp	.+34     	; 0x180 <ADC_read+0x6c>
+		case sensorFour:
+		ADMUX &=~ 0x1F;
+ 15e:	ec e7       	ldi	r30, 0x7C	; 124
+ 160:	f0 e0       	ldi	r31, 0x00	; 0
+ 162:	80 81       	ld	r24, Z
+ 164:	80 7e       	andi	r24, 0xE0	; 224
+ 166:	80 83       	st	Z, r24
+		ADMUX |= (1<<MUX0)|(1<<MUX1);
+ 168:	80 81       	ld	r24, Z
+ 16a:	83 60       	ori	r24, 0x03	; 3
+ 16c:	80 83       	st	Z, r24
+		break;
+ 16e:	08 c0       	rjmp	.+16     	; 0x180 <ADC_read+0x6c>
+		case sensorFive:
+		ADMUX &=~ 0x1F;
+ 170:	ec e7       	ldi	r30, 0x7C	; 124
+ 172:	f0 e0       	ldi	r31, 0x00	; 0
+ 174:	80 81       	ld	r24, Z
+ 176:	80 7e       	andi	r24, 0xE0	; 224
+ 178:	80 83       	st	Z, r24
+		ADMUX |= (1<<MUX2);
+ 17a:	80 81       	ld	r24, Z
+ 17c:	84 60       	ori	r24, 0x04	; 4
+ 17e:	80 83       	st	Z, r24
+		break;
+	}
+	ADCSRA |= (1<<ADSC);  //Start ADC Conversion
+ 180:	ea e7       	ldi	r30, 0x7A	; 122
+ 182:	f0 e0       	ldi	r31, 0x00	; 0
+ 184:	80 81       	ld	r24, Z
+ 186:	80 64       	ori	r24, 0x40	; 64
+ 188:	80 83       	st	Z, r24
+	while ((ADCSRA & (1<<ADSC)));  //Wait for ADC Conversion to complete
+ 18a:	80 91 7a 00 	lds	r24, 0x007A	; 0x80007a <__TEXT_REGION_LENGTH__+0x7c007a>
+ 18e:	86 fd       	sbrc	r24, 6
+ 190:	fc cf       	rjmp	.-8      	; 0x18a <ADC_read+0x76>
+	return ADC;  //Return ADC value
+ 192:	80 91 78 00 	lds	r24, 0x0078	; 0x800078 <__TEXT_REGION_LENGTH__+0x7c0078>
+ 196:	90 91 79 00 	lds	r25, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7c0079>
+}
+ 19a:	08 95       	ret
+
+0000019c <_Z17motorTimerDisablev>:
+}
+
+void motorTimerDisable(void)
+{
+    // Disable Timer/Counter3
+    TCCR3B &= ~((1 << CS32) | (1 << CS31) | (1 << CS30));
+ 19c:	e1 e9       	ldi	r30, 0x91	; 145
+ 19e:	f0 e0       	ldi	r31, 0x00	; 0
+ 1a0:	80 81       	ld	r24, Z
+ 1a2:	88 7f       	andi	r24, 0xF8	; 248
+ 1a4:	80 83       	st	Z, r24
+ 1a6:	08 95       	ret
+
+000001a8 <_Z10motorsInitv>:
 }
 
 void motorsInit(void)
 {
     // Configure Timer/Counter3 for correct phase mode, 255 match value, 256 prescaler, and output pins
     TCCR3A = (1 << WGM30) | (1 << COM3A1) | (1 << COM3B1); // Phase Correct PWM, 8-bit
- 114:	81 ea       	ldi	r24, 0xA1	; 161
- 116:	80 93 90 00 	sts	0x0090, r24	; 0x800090 <__TEXT_REGION_LENGTH__+0x7c0090>
+ 1a8:	81 ea       	ldi	r24, 0xA1	; 161
+ 1aa:	80 93 90 00 	sts	0x0090, r24	; 0x800090 <__TEXT_REGION_LENGTH__+0x7c0090>
     TCCR3B = (1 << CS32); // Prescaler 256
- 11a:	84 e0       	ldi	r24, 0x04	; 4
- 11c:	80 93 91 00 	sts	0x0091, r24	; 0x800091 <__TEXT_REGION_LENGTH__+0x7c0091>
-    LEFT_FORWARD_COMP_VALUE = 0; // Match value for Timer/Counter3
- 120:	10 92 99 00 	sts	0x0099, r1	; 0x800099 <__TEXT_REGION_LENGTH__+0x7c0099>
- 124:	10 92 98 00 	sts	0x0098, r1	; 0x800098 <__TEXT_REGION_LENGTH__+0x7c0098>
-    RIGHT_FORWARD_COMP_VALUE = 0; // Match value for Timer/Counter3
- 128:	10 92 9b 00 	sts	0x009B, r1	; 0x80009b <__TEXT_REGION_LENGTH__+0x7c009b>
- 12c:	10 92 9a 00 	sts	0x009A, r1	; 0x80009a <__TEXT_REGION_LENGTH__+0x7c009a>
+ 1ae:	84 e0       	ldi	r24, 0x04	; 4
+ 1b0:	80 93 91 00 	sts	0x0091, r24	; 0x800091 <__TEXT_REGION_LENGTH__+0x7c0091>
+    LEFT_FORWARD_COMP_VALUE = 64; // Match value for Timer/Counter3
+ 1b4:	80 e4       	ldi	r24, 0x40	; 64
+ 1b6:	90 e0       	ldi	r25, 0x00	; 0
+ 1b8:	90 93 99 00 	sts	0x0099, r25	; 0x800099 <__TEXT_REGION_LENGTH__+0x7c0099>
+ 1bc:	80 93 98 00 	sts	0x0098, r24	; 0x800098 <__TEXT_REGION_LENGTH__+0x7c0098>
+    RIGHT_FORWARD_COMP_VALUE = 64; // Match value for Timer/Counter3
+ 1c0:	90 93 9b 00 	sts	0x009B, r25	; 0x80009b <__TEXT_REGION_LENGTH__+0x7c009b>
+ 1c4:	80 93 9a 00 	sts	0x009A, r24	; 0x80009a <__TEXT_REGION_LENGTH__+0x7c009a>
 
     // Set output pins for Timer/Counter3
     DDRE |= (1 << PE3) | (1 << PE4); // Set PE3 and PE4 as output for Timer/Counter3
- 130:	8d b1       	in	r24, 0x0d	; 13
- 132:	88 61       	ori	r24, 0x18	; 24
- 134:	8d b9       	out	0x0d, r24	; 13
+ 1c8:	8d b1       	in	r24, 0x0d	; 13
+ 1ca:	88 61       	ori	r24, 0x18	; 24
+ 1cc:	8d b9       	out	0x0d, r24	; 13
     
     //setam pini pentru motor ca iesire cu Valorile initiale 0
     //Initializam pini pentru motor
     DDRA |= (1 << DDA0) | (1 << DDA1) | (1 << DDA2) | (1 << DDA3);
- 136:	81 b1       	in	r24, 0x01	; 1
- 138:	8f 60       	ori	r24, 0x0F	; 15
- 13a:	81 b9       	out	0x01, r24	; 1
+ 1ce:	81 b1       	in	r24, 0x01	; 1
+ 1d0:	8f 60       	ori	r24, 0x0F	; 15
+ 1d2:	81 b9       	out	0x01, r24	; 1
 
     //setam in 0 pini pentru motor
     STOP_MOTORS();
- 13c:	82 b1       	in	r24, 0x02	; 2
- 13e:	85 7f       	andi	r24, 0xF5	; 245
- 140:	82 b9       	out	0x02, r24	; 2
- 142:	08 95       	ret
+ 1d4:	82 b1       	in	r24, 0x02	; 2
+ 1d6:	85 7f       	andi	r24, 0xF5	; 245
+ 1d8:	82 b9       	out	0x02, r24	; 2
+    motorTimerDisable();
+ 1da:	e0 cf       	rjmp	.-64     	; 0x19c <_Z17motorTimerDisablev>
+ 1dc:	08 95       	ret
 
-00000144 <main>:
+000001de <_Z16motorTimerEnablev>:
+}
 
+void motorTimerEnable(void)
+{
+    // Enable Timer/Counter3
+    TCCR3B |= (1 << CS32);
+ 1de:	e1 e9       	ldi	r30, 0x91	; 145
+ 1e0:	f0 e0       	ldi	r31, 0x00	; 0
+ 1e2:	80 81       	ld	r24, Z
+ 1e4:	84 60       	ori	r24, 0x04	; 4
+ 1e6:	80 83       	st	Z, r24
+ 1e8:	08 95       	ret
 
+000001ea <main>:
+
+#include "main.h"
 
 int main(void)
 {
     ADC_init();
- 144:	da df       	rcall	.-76     	; 0xfa <ADC_init>
+ 1ea:	87 df       	rcall	.-242    	; 0xfa <ADC_init>
     motorsInit();
- 146:	e6 df       	rcall	.-52     	; 0x114 <_Z10motorsInitv>
- 148:	ff cf       	rjmp	.-2      	; 0x148 <main+0x4>
+ 1ec:	dd df       	rcall	.-70     	; 0x1a8 <_Z10motorsInitv>
+    while (1) 
+    {   
+        //TEST
+        if(ADC_read(MID_SENSOR) > IR_SENSOR_THRESHOLD)
+ 1ee:	83 e0       	ldi	r24, 0x03	; 3
+ 1f0:	91 df       	rcall	.-222    	; 0x114 <ADC_read>
+ 1f2:	81 30       	cpi	r24, 0x01	; 1
+ 1f4:	93 40       	sbci	r25, 0x03	; 3
+ 1f6:	58 f0       	brcs	.+22     	; 0x20e <main+0x24>
+        {
+            motorTimerDisable();
+ 1f8:	d1 df       	rcall	.-94     	; 0x19c <_Z17motorTimerDisablev>
+ 1fa:	8f ef       	ldi	r24, 0xFF	; 255
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
 
-0000014a <_exit>:
- 14a:	f8 94       	cli
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1fc:	91 ee       	ldi	r25, 0xE1	; 225
+ 1fe:	24 e0       	ldi	r18, 0x04	; 4
+ 200:	81 50       	subi	r24, 0x01	; 1
+ 202:	90 40       	sbci	r25, 0x00	; 0
+ 204:	20 40       	sbci	r18, 0x00	; 0
+ 206:	e1 f7       	brne	.-8      	; 0x200 <main+0x16>
+ 208:	00 c0       	rjmp	.+0      	; 0x20a <main+0x20>
+ 20a:	00 00       	nop
+ 20c:	f0 cf       	rjmp	.-32     	; 0x1ee <main+0x4>
+            _delay_ms(100);
+        }
+		else
+		{
+			motorTimerEnable();
+ 20e:	e7 df       	rcall	.-50     	; 0x1de <_Z16motorTimerEnablev>
+ 210:	ee cf       	rjmp	.-36     	; 0x1ee <main+0x4>
 
-0000014c <__stop_program>:
- 14c:	ff cf       	rjmp	.-2      	; 0x14c <__stop_program>
+00000212 <_exit>:
+ 212:	f8 94       	cli
+
+00000214 <__stop_program>:
+ 214:	ff cf       	rjmp	.-2      	; 0x214 <__stop_program>

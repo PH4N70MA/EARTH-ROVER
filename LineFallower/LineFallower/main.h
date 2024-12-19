@@ -11,7 +11,10 @@
 #define F_CPU 16000000UL
 
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include <util/delay.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include "Lib/IR_ADC/IRADC.h"
 
 //Define
@@ -37,6 +40,7 @@
 
 //Function prototype
 void motorsInit(void);
-
+void motorTimerDisable(void);
+void motorTimerEnable(void);
 
 #endif /* MAIN_H_ */
