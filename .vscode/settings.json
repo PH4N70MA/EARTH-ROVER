@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "iradc.h": "c",
+        "math.h": "c"
+    }
+}

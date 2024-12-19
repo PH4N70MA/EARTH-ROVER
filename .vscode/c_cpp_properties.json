@@ -8,8 +8,6 @@
             "${workspaceFolder}/**"
             ],
             "defines": [
-                "__ATmega32A__",
-                "__AVR_ATmega32A__",
                 "__ATmega2560__",
                 "__AVR_ATmega2560__"
             ],
@@ -18,7 +16,6 @@
             "cppStandard": "c++11",
             "intelliSenseMode": "gcc-x64",
             "compilerArgs": [
-                "-mmcu=atmega32a",
                 "-mmcu=atmega2560",
                 "-DF_CPU=16000000UL"
             ]
