@@ -247,7 +247,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x158
+.text           0x00000000      0x14e
  *(.vectors)
  .vectors       0x00000000       0xe4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega2560/avr6/crtatmega2560.o
                 0x00000000                __vector_default
@@ -364,16 +364,16 @@ END GROUP
  .text.ADC_init
                 0x000000fa       0x1a Lib/IR_ADC/IRADC.o
                 0x000000fa                ADC_init
- .text._Z14motorsPinsInitv
-                0x00000114        0xe main.o
-                0x00000114                _Z14motorsPinsInitv
- .text.main     0x00000122       0x32 main.o
-                0x00000122                main
-                0x00000154                . = ALIGN (0x2)
+ .text._Z10motorsInitv
+                0x00000114       0x30 main.o
+                0x00000114                _Z10motorsInitv
+ .text.main     0x00000144        0x6 main.o
+                0x00000144                main
+                0x0000014a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000154        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
-                0x00000154                _exit
-                0x00000154                exit
+ .fini9         0x0000014a        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
+                0x0000014a                _exit
+                0x0000014a                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -392,11 +392,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000154        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
+ .fini0         0x0000014a        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr6\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000158                _etext = .
+                0x0000014e                _etext = .
 
-.data           0x00800200        0x0 load address 0x00000158
+.data           0x00800200        0x0 load address 0x0000014e
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -414,8 +414,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 [!provide]                PROVIDE (__bss_end, .)
-                0x00000158                __data_load_start = LOADADDR (.data)
-                0x00000158                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000014e                __data_load_start = LOADADDR (.data)
+                0x0000014e                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800200        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -509,24 +509,24 @@ END GROUP
  .debug_abbrev  0x00000b1a       0xec Lib/IR_ADC/IRADC.o
  .debug_abbrev  0x00000c06       0x7f main.o
 
-.debug_line     0x00000000      0x436
+.debug_line     0x00000000      0x430
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x1fa C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega2560/avr6/crtatmega2560.o
  .debug_line    0x000001fa      0x19a Lib/IR_ADC/IRADC.o
- .debug_line    0x00000394       0xa2 main.o
+ .debug_line    0x00000394       0x9c main.o
 
 .debug_frame    0x00000000       0xa0
  *(.debug_frame)
  .debug_frame   0x00000000       0x6c Lib/IR_ADC/IRADC.o
  .debug_frame   0x0000006c       0x34 main.o
 
-.debug_str      0x00000000      0x6e1
+.debug_str      0x00000000      0x6d9
  *(.debug_str)
  .debug_str     0x00000000      0x3e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega2560/avr6/crtatmega2560.o
  .debug_str     0x000003e6      0x1e1 Lib/IR_ADC/IRADC.o
                                 0x215 (size before relaxing)
- .debug_str     0x000005c7      0x11a main.o
-                                0x1dc (size before relaxing)
+ .debug_str     0x000005c7      0x112 main.o
+                                0x1d4 (size before relaxing)
 
 .debug_loc      0x00000000      0x1ca
  *(.debug_loc)
